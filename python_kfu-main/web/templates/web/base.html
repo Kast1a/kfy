@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Time Tracker</title>
+</head>
+<body>
+    <h1><a href="{% url 'main' %}">Time Tracker</a></h1>
+    <nav>
+      <a href="{% url 'main' %}">Слоты</a>
+        {% if user.is_anonymous %}
+            <div style="text-align: right">
+                <a href="{% url 'registration' %}">Регистрация</a>
+                <a href="{% url 'auth' %}">Авторизация</a>
+            </div>
+        {% else %}
+            <a href="{% url 'time_slot_add' %}">Создать тайм-слот</a>
+            <a href="{% url 'tags' %}">Теги</a>
+            <a href="{% url 'holidays' %}">Выходные</a>
+            <div style="text-align: right">
+                {% if not user.is_anonymous %}
+                    Вы авторизованы как <b>{{ user.username }}</b>
+                {% endif %}
+                <a href="{% url 'logout' %}">Выйти</a>
+            </div>
+        {% endif %}
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
